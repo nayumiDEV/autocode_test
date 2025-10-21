@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cyberpunk Clock</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <style>
+      :root {
+        --bg-primary: #0a0014;
+        --bg-secondary: #1a0f3d;
+        --neon-blue: #00f0ff;
+        --neon-magenta: #ff00e6;
+        --neon-yellow: #ffe600;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(circle at center, var(--bg-secondary), var(--bg-primary));
+        color: var(--neon-blue);
+        overflow: hidden;
+      }
+
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+            to right,
+            rgba(0, 240, 255, 0.18) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 0, 230, 0.12) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px;
+        filter: blur(0.6px);
+        opacity: 0.45;
+        animation: drift 18s linear infinite;
+        pointer-events: none;
+      }
+
+      .glow-ring {
+        position: absolute;
+        width: 50vmin;
+        height: 50vmin;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 0, 230, 0.35);
+        box-shadow: 0 0 40px rgba(255, 0, 230, 0.35);
+        animation: pulse 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .clock-container {
+        position: relative;
+        padding: 3.5rem 4.5rem;
+        border: 2px solid rgba(0, 240, 255, 0.4);
+        border-radius: 16px;
+        backdrop-filter: blur(18px);
+        background: rgba(10, 0, 20, 0.6);
+        box-shadow: 0 0 35px rgba(0, 240, 255, 0.2),
+          inset 0 0 25px rgba(255, 0, 230, 0.35);
+        text-align: center;
+      }
+
+      .title {
+        text-transform: uppercase;
+        letter-spacing: 0.32em;
+        font-size: 0.85rem;
+        color: var(--neon-magenta);
+        margin-bottom: 1.5rem;
+      }
+
+      .time {
+        font-size: clamp(2.8rem, 4vw + 2rem, 5.5rem);
+        font-weight: 700;
+        text-shadow: 0 0 12px rgba(0, 240, 255, 0.75),
+          0 0 24px rgba(255, 0, 230, 0.45);
+        letter-spacing: 0.08em;
+        position: relative;
+      }
+
+      .time::after {
+        content: attr(data-date);
+        display: block;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.35em;
+        color: var(--neon-yellow);
+        text-shadow: 0 0 10px rgba(255, 230, 0, 0.5);
+      }
+
+      .scan-line {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(0, 240, 255, 0.15) 50%,
+          transparent 100%
+        );
+        animation: scan 4s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-80px, -80px, 0);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.35;
+        }
+        50% {
+          transform: scale(1.08);
+          opacity: 0.55;
+        }
+      }
+
+      @keyframes scan {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(100%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <div class="glow-ring"></div>
+    <div class="clock-container">
+      <div class="scan-line"></div>
+      <div class="title">Neon District Time Node</div>
+      <div class="time" id="time-display" data-date=""></div>
+    </div>
+    <script>
+      const timeDisplay = document.getElementById("time-display");
+
+      const formatClock = (date) => {
+        const options = {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        };
+
+        return date.toLocaleTimeString("vi-VN", options);
+      };
+
+      const formatDate = (date) => {
+        const options = {
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        };
+
+        return date.toLocaleDateString("vi-VN", options).toUpperCase();
+      };
+
+      const updateClock = () => {
+        const now = new Date();
+        timeDisplay.textContent = formatClock(now);
+        timeDisplay.setAttribute("data-date", formatDate(now));
+      };
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
+</html>

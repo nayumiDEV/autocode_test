@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>User Agent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 640px;
+      margin: 80px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 32px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.75rem;
+      color: #222222;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #333333;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>User Agent</h1>
+    <p id="user-agent">Loading user agent...</p>
+  </main>
+  <script>
+    (function () {
+      var target = document.getElementById('user-agent');
+      if (!target) {
+        return;
+      }
+
+      var ua = navigator.userAgent || 'Unknown';
+      target.textContent = ua;
+    }());
+  </script>
+</body>
+</html>

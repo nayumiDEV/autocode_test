@@ -102,6 +102,27 @@
         text-shadow: 0 0 10px rgba(255, 230, 0, 0.5);
       }
 
+      .ua-link {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.6rem 1.8rem;
+        border: 1px solid rgba(0, 240, 255, 0.4);
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        font-size: 0.75rem;
+        color: var(--neon-yellow);
+        text-decoration: none;
+        box-shadow: 0 0 15px rgba(255, 230, 0, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .ua-link:hover,
+      .ua-link:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 0 22px rgba(255, 230, 0, 0.6);
+      }
+
       .scan-line {
         position: absolute;
         inset: 0;
@@ -153,6 +174,7 @@
       <div class="scan-line"></div>
       <div class="title">Neon District Time Node</div>
       <div class="time" id="time-display" data-date=""></div>
+      <a class="ua-link" href="ua.html">Truy cap UA</a>
     </div>
     <script>
       const timeDisplay = document.getElementById("time-display");
